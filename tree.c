@@ -108,13 +108,31 @@ void print_tree(Node *root) {
     }
 }
 
+void shuffle(int *array, size_t n)
+{
+    if (n <= 1) {
+        return;
+    }
+    size_t i;
+    for (i = 0; i < n - 1; i++) {
+        size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+        int t = array[j];
+        array[j] = array[i];
+        array[i] = t;
+    }
+}
+
 int main(void) {
-    Node *root = init_node(7);
-    root = insert(root, 6);
-    root = insert(root, 5);
-    root = insert(root, 9);
-    root = insert(root, 8);
-    root = insert(root, 10);
+    size_t size = 50;
+    int a[size];
+    for (int i = 0; i<size; i++){
+        a[i] = i;
+    }
+    shuffle(a, size);
+    Node *root = init_node(1);
+    for (int i = 1; i<size; i++){
+        root = insert(root, a[i]);
+    }
     print_tree(root);
     return 0;
 }
